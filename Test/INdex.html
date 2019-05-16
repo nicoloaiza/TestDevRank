@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+        <style>
+            .group {
+                margin-top: 30px;
+            }
+
+            .title {
+                margin-bottom: 10px;
+            }
+
+            table {
+                border-collapse: collapse;
+            }
+
+            table, th, td {
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <script>// ******************************************************************************
+            // ************************* Employee related functions **************************
+            // ******************************************************************************
+            function Employee(firstname, lastName) {
+                this.firstName = firstname;
+                this.lastName = lastName;
+                this.salary = 0;
+                this.increaseSalary = function () {
+                    this.salary += 1000;
+                }
+                this.showDetails = function () {
+                    console.log({ firstName: this.firstName, lastName: this.lastName, salary: this.salary });
+                }
+            }
+
+            var employee = new Employee('Jhon', 'Smith');
+
+            function increaseSalary() {
+                employee.increaseSalary();
+                showDetails();
+            }
+
+            function showDetails() {
+                var table = document.getElementById('employeeTable');
+                if (table.rows.length > 1) {
+                    var row = table.rows[1];
+                    var cell1 = row.cells[0];
+                    var cell2 = row.cells[1];
+                    var cell3 = row.cells[2];
+                    cell1.innerHTML = employee.firstName;
+                    cell2.innerHTML = employee.lastName;
+                    cell3.innerHTML = employee.salary;
+                } else {
+                    var row = table.insertRow(1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    cell1.innerHTML = employee.firstName;
+                    cell2.innerHTML = employee.lastName;
+                    cell3.innerHTML = employee.salary;
+                }
+            }
+            // ******************************************************************************
+
+            // ******************************************************************************
+            // *********************** multiplication related functions *********************
+            // ******************************************************************************
+            function mul(x) {
+                return function (y) {
+                    return function (z) {
+                        return x * y * z;
+                    };
+                };
+            }
+
+            function calculate() {
+                document.getElementById('operationResult').value = '';
+                var input = document.getElementById('operationValues');
+                if (input.value) {
+                    var values = input.value.split(',');
+                    if (values.length >= 3) {
+                        var result = mul(values[0])(values[1])(values[2]);
+                        document.getElementById('operationResult').value = result;
+                    }
+                }
+            }
+            // ******************************************************************************
+
+
+
+            // ******************************************************************************
+            // ******************** longest country name related functions ******************
+            // ******************************************************************************
+            function Longest_Country_Name(values) {
+                if (values && values.length > 0) {
+                    return values.reduce(function (a, b) {
+                        return a.length > b.length ? a : b
+                    }, '');
+                }
+            }
+
+            function getLongest() {
+                var input = document.getElementById('stringsValues');
+                document.getElementById('stringsResult').value = '';
+                if (input.value) {
+                    var values = input.value.split(',');
+                    if (values.length > 0) {
+                        var result = Longest_Country_Name(values);
+                        document.getElementById('stringsResult').value = result;
+                    }
+                }
+            }
+            // ******************************************************************************
+
+            // ******************************************************************************
+            // ****************** Remove color from select related functions ****************
+            // ******************************************************************************
+            function removeColor() {
+                var select = document.getElementById('colorSelect');
+                if (select) {
+                    select.remove(select.selectedIndex);
+                }
+            }
+            // ******************************************************************************
+
+            // ******************************************************************************
+            // ******************** Insert row in table related functions *******************
+            // ******************************************************************************
+            function insert_Row() {
+                var table = document.getElementById('sampleTable');
+                if (table) {
+                    var rowsCounter = table.rows.length;
+                    var row = table.insertRow(rowsCounter);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    cell1.innerHTML = "Row " + parseInt(rowsCounter + 1) + " cell 1";
+                    cell2.innerHTML = "Row " + parseInt(rowsCounter + 1) + " cell 2";
+                }
+            }
+            // ******************************************************************************
+        </script>
+
+        <div class="row group">
+            <div class="col-xs-12 title">
+                <span>Insert 3 values separeted by comma and press the button to get the result</span>
+            </div>
+            <div class="col-xs-12">
+                <table id="employeeTable" border="1">
+                    <thead>
+                        <tr>
+                            <td>First name</td>
+                            <td>Last name</td>
+                            <td>Salary</td>
+                        </tr>
+                    </thead>
+                </table>
+                <input type="button" onclick="increaseSalary()" value="Increase salary">
+                <input type="button" onclick="showDetails()" value="Show details">
+            </div>
+        </div>
+
+        <div class="row group">
+            <div class="col-xs-12 title">
+                <span>Insert 3 values separeted by comma and press the button to get the result</span>
+            </div>
+            <div class="col-xs-12">
+                <input type="text" id="operationValues" value="2,3,4">
+                <input type="button" onclick="calculate()" value="Calculate">
+                <input type="text" id="operationResult">
+            </div>
+        </div>
+
+        <div class="row group">
+            <div class="col-xs-12 title">
+                <span>Insert 3 contry names separeted by comma and press the button to get the longest one</span>
+            </div>
+            <div class="col-xs-12">
+                <input type="text" id="stringsValues" value="Australia,Germany,United States of America">
+                <input type="button" onclick="getLongest()" value="Get the longest">
+                <input type="text" id="stringsResult">
+            </div>      
+        </div>
+
+        <div class="row group">
+            <div class="col-xs-12 title">
+                <span>Select a value from the dropdown and press the button to remove the item from the dropdown</span>
+            </div>
+            <div class="col-xs-12">
+                <select id="colorSelect">
+                    <option>Red</option>
+                    <option>Green</option>
+                    <option>White</option>
+                    <option>Black</option>
+                </select>
+                <input type="button" onclick="removeColor()" value="Select and Remove">
+            </div>
+        </div>
+
+
+        <div class="row group">
+            <div class="col-xs-12 title">
+                <span>Press the button to insert a new row in the table</span>
+            </div>
+            <div class="col-xs-12 title">
+                <input type="button" onclick="insert_Row()" value="Insert row">
+            </div>
+            <div class="col-xs-12">
+                <table id="sampleTable" border="1">
+                    <tr>
+                        <td>Row1 cell1</td>
+                        <td>Row1 cell2</td>
+                    </tr>
+                    <tr>
+                        <td>Row2 cell1</td>
+                        <td>Row2 cell2</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
